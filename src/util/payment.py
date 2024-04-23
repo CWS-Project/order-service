@@ -10,10 +10,9 @@ def create_payment_id(
         amount: float, 
         currency: str, 
         description: str, 
-        product_id: str, 
         user_id: str, 
     ) -> str:
-    print(f"Creating payment intent for {amount} {currency} for product {product_id}")
+    print(f"Creating payment intent for {amount} {currency} for user {user_id}")
     intent = stripe.PaymentIntent.create(
         amount=int(amount*100),
         currency=currency.lower(),
@@ -24,7 +23,6 @@ def create_payment_id(
     stripe.PaymentIntent.modify(
         intent["id"], 
         metadata={
-            "product_id": product_id, 
             "user_id": user_id,
         }
     )

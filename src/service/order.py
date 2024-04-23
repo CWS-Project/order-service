@@ -1,4 +1,4 @@
-from util import DatabaseSession, RedisSession
+from util import DatabaseSession, RedisSession, create_payment_id
 from bson.objectid import ObjectId
 from typing import Tuple
 import requests, os, json
@@ -37,6 +37,7 @@ class OrderService:
         sub_total = sum([item["price"] for item in cart])
         tax = sub_total * 0.18
         grand_total = sub_total + tax
+        payment_intent_id = create_payment_id(grand_total, "INR", f"Payment for order by {user_id}", user_id)
 
         success, data = self.__db_client.insert("orders", {
             "user_id": user_id,
@@ -45,7 +46,8 @@ class OrderService:
             "tax": tax,
             "grand_total": grand_total,
             "currency": "inr",
-            "status": "pending"
+            "status": "pending",
+            "payment_id": payment_intent_id
         })
 
         if not success:
