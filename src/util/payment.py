@@ -10,6 +10,7 @@ def create_payment_id(
         currency: str, 
         description: str, 
         user_id: str, 
+        order_id: str
     ) -> str:
     print(f"Creating payment intent for {amount} {currency} for user {user_id}")
     intent = stripe.PaymentIntent.create(
@@ -23,6 +24,7 @@ def create_payment_id(
         intent["id"], 
         metadata={
             "user_id": user_id,
+            "order_id": order_id,
         }
     )
 

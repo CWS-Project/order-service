@@ -33,13 +33,15 @@ class OrderService:
             item["price"] = product["price"]
             item["name"] = product["name"]
         
+        order_id = ObjectId()
 
         sub_total = round(sum([item["price"] for item in cart]), 2)
         tax = round(sub_total * 0.18, 2)
         grand_total = round(sub_total + tax, 2)
-        payment_intent_id = create_payment_id(grand_total, "INR", f"Payment for order by {user_id}", user_id)
+        payment_intent_id = create_payment_id(grand_total, "INR", f"Payment for order {str(order_id)} by {user_id}", user_id, str(order_id))
 
         success, data = self.__db_client.insert("orders", {
+            "_id": order_id,
             "user_id": user_id,
             "items": cart,
             "sub_total": sub_total,
