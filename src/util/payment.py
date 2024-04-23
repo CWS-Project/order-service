@@ -4,6 +4,7 @@ from datetime import datetime
 
 
 stripe.api_key = os.getenv("STRIPE_API_KEY")
+stripe.verify_ssl_certs = False
 
 
 def create_payment_id(
