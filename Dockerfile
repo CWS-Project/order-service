@@ -4,7 +4,7 @@ LABEL maintainer="Abhiram B.S.N."
 
 WORKDIR /app
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt && apt-get update && apt-get install -y ca-certificates
 COPY ./src .
 
 EXPOSE 8000
