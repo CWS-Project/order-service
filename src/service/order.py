@@ -55,7 +55,7 @@ class OrderService:
         if not success:
             return False, None
         
-        return True, {"order_id": data, "grand_total": grand_total}
+        return True, {"order_id": data, "payment_id": payment_intent_id, "grand_total": grand_total}
     
     def get_order_by_id(self, order_id: str) -> Tuple[bool, dict | None]:
         order = self.__redis_client.get(f"order:{order_id}")
