@@ -35,7 +35,7 @@ class OrderService:
         
         order_id = ObjectId()
 
-        sub_total = round(sum([item["price"] for item in cart]), 2)
+        sub_total = round(sum([item["price"]*item["quantity"] for item in cart]), 2)
         tax = round(sub_total * 0.18, 2)
         grand_total = round(sub_total + tax, 2)
         payment_intent_id = create_payment_id(grand_total, "INR", f"Payment for order {str(order_id)} by {user_id}", user_id, str(order_id))
